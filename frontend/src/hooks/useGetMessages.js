@@ -17,7 +17,7 @@ const useGetMessages = () => {
     
         try{
 
-            const res = await axios.get(`http://localhost:4000/api/message/${selectedConversation._id}`)
+            const res = await axios.get(`/api/message/${selectedConversation._id}`)
       if(res.status != 200){
         throw new Error(res.data.error)
       }

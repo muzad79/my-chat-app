@@ -10,7 +10,7 @@ const {messages,setMessages,selectedConversation}=  useConversation()
 const sendMessage = async(message)=>{
         setLoading(true)
     try{
-        const res = await axios.post(`http://localhost:4000/api/message/send/${selectedConversation?._id}`,{message})
+        const res = await axios.post(`/api/message/send/${selectedConversation?._id}`,{message})
 
         if( res.status !== 201){
 

@@ -10,7 +10,7 @@ const useLogout = () => {
     const logout =async()=>{
 setLoading(true)
     try{
-        const res = await axios.post('http://localhost:4000/api/auth/logout')
+        const res = await axios.post('/api/auth/logout')
         if(res.status == 200 || res.status == 201){
             toast.success("logged out successfully")
         }

@@ -19,7 +19,7 @@ const signup = async({fullname,username,password,confirmPassword,gender})=>{
             confirmPassword,
             gender
         }
-        const res = await axios.post('http://localhost:4000/api/auth/signup',body)
+        const res = await axios.post('/api/auth/signup',body)
         console.log(res.data)
         if(res.status == 201){
             setAuthUser(res?.data?.data)

@@ -13,7 +13,7 @@ const useGetConversations = () => {
             try{
 
                 axios.defaults.withCredentials = true;
-                const res = await axios.get('http://localhost:4000/api/user')
+                const res = await axios.get('/api/user')
                 if(res.status == 200 || res.status == 201){
 
                     setConversations(res.data)
