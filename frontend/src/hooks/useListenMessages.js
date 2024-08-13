@@ -13,20 +13,19 @@ const useListenMessages = () => {
       const sound = new Audio(notificationSound);
       sound.play();
 
-      if (newMessage.senderId !== selectedConversation?._id) {
-        toast.success('You have a new message');
-        newMessage.shouldShake = true;  // Mark as unread
-        incrementUnreadMessages(newMessage.senderId); // Increment unread count
-      } else {
+      // Check if the new message is from the currently selected conversation
+      if (newMessage.senderId === selectedConversation?._id) {
+        setMessages( [...messages, newMessage]);
         newMessage.shouldShake = false; // Mark as read
+      } else {
+        toast.success('You have a new message');
+        incrementUnreadMessages(newMessage.senderId); // Increment unread count for other conversations
+        newMessage.shouldShake = true;  // Mark as unread
       }
-
-      if(newMessage.senderId === selectedConversation._id)
-        setMessages([...messages,newMessage])
     });
 
     return () => socket.off('newMessage');
-  }, [socket, setMessages, selectedConversation, incrementUnreadMessages]);
+  }, [socket, selectedConversation, incrementUnreadMessages, setMessages]);
 };
 
 export default useListenMessages;

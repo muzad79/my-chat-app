@@ -19,9 +19,7 @@ const useConversation = create((set) => ({
     return { selectedConversation: conversation };
   }),
 
-  setMessages: (newMessages) => set((state) => ({
-    messages: newMessages,
-  })),
+  setMessages :(messages)=>set({messages}),
 
   incrementUnreadMessages: (conversationId) => set((state) => ({
     unreadMessages: {
