@@ -1,25 +1,31 @@
-import React, { useEffect } from 'react'
-import { useSocketContext } from '../context/SocketContext'
-import useConversation from '../zustand/useConversation'
-import notificationSound from '../assets/sounds/notification.mp3'
+import React, { useEffect } from 'react';
+import { useSocketContext } from '../context/SocketContext';
+import useConversation from '../zustand/useConversation';
+import notificationSound from '../assets/sounds/notification.mp3';
+import toast from 'react-hot-toast';
 
 const useListenMessages = () => {
-const{socket}= useSocketContext()
-const{messages,setMessages}=useConversation()
+  const { socket } = useSocketContext();
+  const { messages, setMessages, selectedConversation, incrementUnreadMessages } = useConversation();
 
+  useEffect(() => {
+    socket?.on('newMessage', (newMessage) => {
+      const sound = new Audio(notificationSound);
+      sound.play();
 
-useEffect(()=>{
-    socket?.on("newMessage",(newMessage)=>{
-        newMessage.shouldShake = true
-        const sound = new Audio(notificationSound)
-        sound.play()
-        setMessages([...messages,newMessage])
+      if (newMessage.senderId !== selectedConversation?._id) {
+        toast.success('You have a new message');
+        newMessage.shouldShake = true;  // Mark as unread
+        incrementUnreadMessages(newMessage.senderId); // Increment unread count
+      } else {
+        newMessage.shouldShake = false; // Mark as read
+      }
 
-    })
+      setMessages([...messages, newMessage]);
+    });
 
-    return ()=>socket.off("newMessage")
+    return () => socket.off('newMessage');
+  }, [socket, setMessages, selectedConversation, incrementUnreadMessages]);
+};
 
-},[socket,setMessages,messages])
-}
-
-export default useListenMessages
+export default useListenMessages;
