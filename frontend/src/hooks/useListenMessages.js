@@ -21,7 +21,8 @@ const useListenMessages = () => {
         newMessage.shouldShake = false; // Mark as read
       }
 
-      setMessages([...messages, newMessage]);
+      if(newMessage.senderId === selectedConversation._id)
+        setMessages([...messages,newMessage])
     });
 
     return () => socket.off('newMessage');
