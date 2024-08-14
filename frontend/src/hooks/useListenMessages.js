@@ -16,7 +16,7 @@ const useListenMessages = () => {
       // Check if the new message is from the currently selected conversation
       if (newMessage.senderId === selectedConversation?._id) {
         setMessages([...messages, newMessage]);
-        newMessage.shouldShake = false; // Mark as read
+        newMessage.shouldShake = true; // Mark as read
       } else {
         toast.success('You have a new message');
         incrementUnreadMessages(newMessage.senderId); // Increment unread count for other conversations
